@@ -2,3 +2,5 @@
 /target/
 /.classpath
 /.project
+/.idea
+/estafet-blockchain-demo-qa.iml
