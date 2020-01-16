@@ -1,7 +1,7 @@
 Feature: Bank transactions and details
 
   Background: List accounts
-    Given The following bank accounts exist:
+    Given This bank account exist:
       | account name      | currency |
       | "Dennis Williams" | "USD"    |
     And The account has the following transactions:

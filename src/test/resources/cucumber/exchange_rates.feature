@@ -2,7 +2,7 @@ Feature: Currency Converter
   This is to test the exchange rates functionality
 
   Background: Exchange rates
-    Given The the following values exchange rates exist: <currency> and <rate>
+    Given The following values exchange rates exist: <currency> and <rate>
       | currency | rate |
       | "USD"    | 200  |
       | "GBP"    | 250  |
