@@ -71,6 +71,8 @@ public class ExchangeRateSteps {
     }
     @When("The user updates the rate for {string} to <rate>")
     public void updateRate(String string, io.cucumber.datatable.DataTable dataTable) {
+        homePage.clickExchangeRatesMenuItem();
+        Assert.assertTrue(exchangeRateList.isLoaded());
 
     }
 
