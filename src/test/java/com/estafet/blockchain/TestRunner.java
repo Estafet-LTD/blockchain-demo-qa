@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
 plugin = {"pretty", "json:target/cucumber-report.json"},
 glue = {"com.estafet.blockchain"},
-features = {"/estafet-blockchain-demo-qa/src/test/resources/cucumber"})
+features = {"src/test/resources/cucumber"})
 
 public class TestRunner {
 	

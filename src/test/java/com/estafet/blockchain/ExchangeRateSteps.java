@@ -1,14 +1,16 @@
 package com.estafet.blockchain;
 
 import com.estafet.blockchain.demo.data.lib.exchangerate.ExchangeRate;
-import io.cucumber.datatable.DataTable;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
-import io.cucumber.java.en.Then;
+import cucumber.api.DataTable;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import com.estafet.blockchain.demo.pages.lib.home.HomePage;
 import com.estafet.blockchain.demo.pages.lib.rate.*;
+//import com.estafet.microservices.scrum.lib.data.db.ServiceDatabases;
+
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import static org.junit.Assert.assertThat;
 
 public class ExchangeRateSteps {
 
-    HomePage homePage;
+	HomePage homePage;
     ExchangeRate exchangeRate;
     NewExchangeRatePage newExchangeRate;
     ExchangeRateListPage exchangeRateList;
@@ -31,16 +33,18 @@ public class ExchangeRateSteps {
     @Before
     public void before() {
         homePage = new HomePage();
-        ExchangeRate.deleteExchangeRates();
+    	ExchangeRate.deleteExchangeRates();
+
+ 	
     }
 
-    @After
+    @After()
     public void after() {
-        homePage.close();
+       // homePage.close();
     }
 
     @Given("The following exchange rates exist: <currency> and <rate>")
-    public void setRates(io.cucumber.datatable.DataTable dataTable) {
+    public void setRates(DataTable dataTable) {
         List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
 
         for(int i=0; i<list.size(); i++) {
@@ -49,17 +53,18 @@ public class ExchangeRateSteps {
     }
 
         @When("New exchange rate is created with currency <currency> and rate <rate>")
-    public void addNewRate(io.cucumber.datatable.DataTable dataTable) {
+    public void addNewRate(DataTable dataTable) {
             List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
+            System.out.println(list);
             existingRatesList = ExchangeRate.getExchangeRates();
-            homePage.clickExchangeRatesMenuItem();
-            Assert.assertTrue(exchangeRateList.isLoaded());
-            exchangeRateItem.clickNewExchangeRateLink();
-            Assert.assertTrue(newExchangeRate.isLoaded());
-            newExchangeRate.setCurrency(list.get(0).get("currency"));
-            newExchangeRate.setRate(Double.valueOf(list.get(0).get("rate")));
-            newExchangeRate.clickCreateRateButton();
-            Assert.assertTrue(exchangeRateList.isLoaded());
+           // homePage.clickExchangeRatesMenuItem();
+          //  Assert.assertTrue(exchangeRateList.isLoaded());
+           // exchangeRateItem.clickNewExchangeRateLink();
+         //   Assert.assertTrue(newExchangeRate.isLoaded());
+         //   newExchangeRate.setCurrency(list.get(0).get("currency"));
+         //   newExchangeRate.setRate(Double.valueOf(list.get(0).get("rate")));
+         //   newExchangeRate.clickCreateRateButton();
+         //   Assert.assertTrue(exchangeRateList.isLoaded());
     }
 
     @Then("The new exchange rate is added to the existing list:")
@@ -69,8 +74,8 @@ public class ExchangeRateSteps {
 //        Assert.assertThat(existingRatesList.);        }
 
     }
-    @When("The user updates the rate for {string} to <rate>")
-    public void updateRate(String string, io.cucumber.datatable.DataTable dataTable) {
+    @When("The user updates the rate for \"([^\"]*)\" to <rate>")
+    public void updateRate(String string, DataTable dataTable) {
         homePage.clickExchangeRatesMenuItem();
         Assert.assertTrue(exchangeRateList.isLoaded());
 
@@ -91,18 +96,18 @@ public class ExchangeRateSteps {
 
     }
 
-    @When("User selects {string} from the currencies list")
+    @When("User selects \"([^\"]*)\" from the currencies list")
     public void selectRate(String string) {
 
     }
 
     @Then("They can view the exchange rate details:")
-    public void verifyRateDetails(io.cucumber.datatable.DataTable dataTable) {
+    public void verifyRateDetails(DataTable dataTable) {
 
     }
 
     @Then("They will see the list will all rates existing:")
-    public void verifyRatesList(io.cucumber.datatable.DataTable dataTable) {
+    public void verifyRatesList(DataTable dataTable) {
 
     }
 }
