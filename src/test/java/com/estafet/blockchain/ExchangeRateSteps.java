@@ -1,13 +1,22 @@
 package com.estafet.blockchain;
 
+import com.estafet.blockchain.demo.data.lib.exchangerate.ExchangeRate;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 
+import java.util.List;
+
 public class ExchangeRateSteps {
+
+    @Before
+    public void deleteAll() {
+        ExchangeRate.deleteExchangeRates();
+    }
+
     @Given("The following exchange rates exist: <currency> and <rate>")
     public void setRates(io.cucumber.datatable.DataTable dataTable) {
-
     }
 
     @When("New exchange rate is created with currency <currency> and rate <rate>")
