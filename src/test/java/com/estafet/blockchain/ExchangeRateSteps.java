@@ -6,10 +6,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExchangeRateSteps {
-
     @Before
     public void deleteAll() {
         ExchangeRate.deleteExchangeRates();
@@ -17,9 +17,18 @@ public class ExchangeRateSteps {
 
     @Given("The following exchange rates exist: <currency> and <rate>")
     public void setRates(io.cucumber.datatable.DataTable dataTable) {
+        List<List<String>> data = dataTable.asList(String.class);
+        List<ExchangeRate> exchangeRates = new ArrayList<ExchangeRate>();
+        for (int i = 1; i < data.size(); i++) {
+            List<String> row = data.get(i);
+           ExchangeRate.setExchangeRate(row.get(0), Double.valueOf(row.get(1)));
+        }
+        System.out.println(exchangeRates.get(0));
+        System.out.println(exchangeRates.get(1));
+
     }
 
-    @When("New exchange rate is created with currency <currency> and rate <rate>")
+        @When("New exchange rate is created with currency <currency> and rate <rate>")
     public void addNewRate(io.cucumber.datatable.DataTable dataTable) {
 
     }
