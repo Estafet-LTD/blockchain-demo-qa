@@ -25,7 +25,7 @@ Feature: Currency Converter
       | 280  |
     Then The rate will be successfully updated
 
-  Scenario: View exchange details
+  Scenario: View exchange rate details
     When The user loads the home page
     And Clicks on the the exchange rates link
     And User selects "USD" from the currencies list
