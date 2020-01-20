@@ -46,6 +46,11 @@
 			<version>0.0.1</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.estafet.blockchain.demo</groupId>
+			<artifactId>estafet-blockchain-demo-data-lib</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<distributionManagement>

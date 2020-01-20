@@ -5,7 +5,7 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 
 public class ExchangeRateSteps {
-    @Given("The following values exchange rates exist: <currency> and <rate>")
+    @Given("The following exchange rates exist: <currency> and <rate>")
     public void setRates(io.cucumber.datatable.DataTable dataTable) {
 
     }
