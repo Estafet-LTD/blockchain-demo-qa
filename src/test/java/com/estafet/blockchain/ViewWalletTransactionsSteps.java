@@ -7,12 +7,12 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class ViewWalletTransactionsSteps {
-    @Given("The following wallets exist: <wallet name>, balance and <balance status>")
+    @Given("^The following wallets exist: <wallet name>, balance and <balance status>$")
     public void setupWallets(DataTable dataTable) {
 
     }
 
-    @When("User selects {string} from the list")
+    @When("User selects (.+) from the list")
     public void selectWallet(String string) {
 
     }

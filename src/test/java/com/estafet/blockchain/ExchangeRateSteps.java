@@ -10,7 +10,7 @@ import org.junit.Assert;
 
 import java.util.List;
 import java.util.Map;
-import io.cucumber.datatable.DataTable;
+import cucumber.api.DataTable;
 
 public class ExchangeRateSteps  {
 

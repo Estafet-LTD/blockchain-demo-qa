@@ -5,7 +5,7 @@ import cucumber.api.java.en.When;
 
 
 public class NewAccountSteps {
-    @When("I submit name {string}, amount {int} and currency in use {string}")
+    @When("I submit name (.+), amount (.+) and currency in use (.+)")
     public void submitAccountData(String string, Integer int1, String string2) {
 
     }
@@ -15,12 +15,12 @@ public class NewAccountSteps {
 
     }
 
-    @Then("The starting balance is matching {int}")
+    @Then("The starting balance is matching (.+)")
     public void veirfyStratingBalance(Integer int1) {
 
     }
 
-    @Then("The currency matches {string}")
+    @Then("The currency matches (.+)")
     public void verifyCurrency(String string) {
 
     }
@@ -30,12 +30,12 @@ public class NewAccountSteps {
 
     }
 
-    @Then("The wallet name matches the bank account name {string}")
+    @Then("The wallet name matches the bank account name (.+)")
     public void verifyWalletName(String string) {
 
     }
 
-    @Then("The wallet balance is {int}")
+    @Then("The wallet balance is (.+)")
     public void verifyWalletBalance(Integer int1) {
 
     }
