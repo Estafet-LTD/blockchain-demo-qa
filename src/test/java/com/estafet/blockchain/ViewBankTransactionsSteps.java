@@ -16,17 +16,17 @@ public class ViewBankTransactionsSteps {
 
     }
 
-    @When("The user selects the account {string}")
+    @When("The user selects the account (.+)")
     public void selectAccount(String string) {
 
     }
 
-    @Then("The account balance is {string}")
+    @Then("The account balance is (.+)")
     public void verifyAccountBalance(String string) {
 
     }
 
-    @Then("The account status will be {string}")
+    @Then("The account status will be (.+)")
     public void verifyAccountStatus(String string) {
 
     }
