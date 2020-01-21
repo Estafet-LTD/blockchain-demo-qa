@@ -4,9 +4,9 @@ Feature: Currency Converter
   Background: Exchange rates
     Given The following exchange rates exist: <currency> and <rate>
       | currency | rate |
-      | "USD"    | 200  |
-      | "GBP"    | 250  |
-      | "CAD"    | 300  |
+      | USD    | 200  |
+      | GBP    | 250  |
+      | CAD    | 300  |
 
   Scenario: Create new exchange rates
     When New exchange rate is created with currency <currency> and rate <rate>
@@ -17,16 +17,18 @@ Feature: Currency Converter
       | "BGN"    | 150  |
 
   Scenario: Update existing exchange rate
-    When The user updates the rate for "GBP" to <rate>
-      | rate |
-      | 280  |
-    Then The rate will be successfully updated
+    When The user updates the rate for existing currency to:
+      | currency | rate |
+      | USD      | 280  |
+    Then The rate details are successfully updated to:
+      | currency | rate |
+      | USD      | 280  |
 
   Scenario: View exchange rate details
     When User selects "USD" from the currencies list
     Then They can view the exchange rate details:
       | currency | rate |
-      | "USD"    | 200  |
+      | USD    | 200  |
 
   Scenario: List all rates
     When Clicks on the the exchange rates link
