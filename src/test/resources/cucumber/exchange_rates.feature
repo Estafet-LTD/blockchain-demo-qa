@@ -12,7 +12,7 @@ Feature: Currency Converter
     When New exchange rate is created with currency <currency> and rate <rate>
       | currency | rate |
       | "BGN"    | 150  |
-    Then The currency  <currency> exists with rate <rate>
+    Then The currency <currency> exists with rate <rate>
       | currency | rate |
       | "BGN"    | 150  |
 

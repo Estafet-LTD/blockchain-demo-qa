@@ -1,17 +1,18 @@
 package com.estafet.blockchain;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import cucumber.api.DataTable;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 public class ViewBankTransactionsSteps {
     @Given("This bank account exist:")
-    public void setupAccount(io.cucumber.datatable.DataTable dataTable) {
+    public void setupAccount(DataTable dataTable) {
 
     }
 
     @Given("The account has the following transactions:")
-    public void setupTransactions(io.cucumber.datatable.DataTable dataTable) {
+    public void setupTransactions(DataTable dataTable) {
 
     }
 

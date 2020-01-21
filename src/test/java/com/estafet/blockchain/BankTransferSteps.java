@@ -1,18 +1,20 @@
 package com.estafet.blockchain;
 
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import cucumber.api.DataTable;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
 
 public class BankTransferSteps {
     @Given("The following wallet exist:")
-    public void createWallet(io.cucumber.datatable.DataTable dataTable) {
+    public void createWallet(DataTable dataTable) {
 
     }
 
     @Given("The following bank account exists:")
-    public void createAccounts(io.cucumber.datatable.DataTable dataTable) {
+    public void createAccounts(DataTable dataTable) {
 
     }
 
