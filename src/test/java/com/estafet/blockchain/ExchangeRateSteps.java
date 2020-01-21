@@ -32,7 +32,7 @@ public class ExchangeRateSteps {
 
     @Before
     public void before() {
-        homePage = new HomePage();
+        //homePage = new HomePage();
     	ExchangeRate.deleteExchangeRates();
 
  	
@@ -55,29 +55,19 @@ public class ExchangeRateSteps {
         @When("New exchange rate is created with currency <currency> and rate <rate>")
     public void addNewRate(DataTable dataTable) {
             List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
-            System.out.println(list);
-            existingRatesList = ExchangeRate.getExchangeRates();
-           // homePage.clickExchangeRatesMenuItem();
-          //  Assert.assertTrue(exchangeRateList.isLoaded());
-           // exchangeRateItem.clickNewExchangeRateLink();
-         //   Assert.assertTrue(newExchangeRate.isLoaded());
-         //   newExchangeRate.setCurrency(list.get(0).get("currency"));
-         //   newExchangeRate.setRate(Double.valueOf(list.get(0).get("rate")));
-         //   newExchangeRate.clickCreateRateButton();
-         //   Assert.assertTrue(exchangeRateList.isLoaded());
+            ExchangeRate.setExchangeRate(list.get(0).get("currency"), Double.valueOf(list.get(0).get("rate")));
+            List<ExchangeRate> ExchangeRates = ExchangeRate.getExchangeRates();
+            
     }
 
-    @Then("The new exchange rate is added to the existing list:")
+    @Then("The currency <currency> exists with rate <rate>")
     public void verifyNewRate(DataTable dataTable) {
-//        Map<String, Double> list = dataTable.asMap(String.class, Double.class);
-//        for (int i = 0; i < list.size(); i++) {
-//        Assert.assertThat(existingRatesList.);        }
-
+    	  List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
+    	ExchangeRate exchangeRate =	ExchangeRate.getExchangeRate(list.get(0).get("currency"));
+    	Assert.assertSame(exchangeRate.getRate(), Double.valueOf(list.get(0).get("rate")));
     }
     @When("The user updates the rate for \"([^\"]*)\" to <rate>")
     public void updateRate(String string, DataTable dataTable) {
-        homePage.clickExchangeRatesMenuItem();
-        Assert.assertTrue(exchangeRateList.isLoaded());
 
     }
 
@@ -86,15 +76,6 @@ public class ExchangeRateSteps {
 
     }
 
-    @When("The user loads the home page")
-    public void homePage() {
-
-    }
-
-    @When("Clicks on the the exchange rates link")
-    public void loadExchangeRates() {
-
-    }
 
     @When("User selects \"([^\"]*)\" from the currencies list")
     public void selectRate(String string) {

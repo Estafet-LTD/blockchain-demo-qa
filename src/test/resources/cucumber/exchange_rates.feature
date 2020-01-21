@@ -12,11 +12,8 @@ Feature: Currency Converter
     When New exchange rate is created with currency <currency> and rate <rate>
       | currency | rate |
       | "BGN"    | 150  |
-    Then The new exchange rate is added to the existing list:
+    Then The currency  <currency> exists with rate <rate>
       | currency | rate |
-      | "USD"    | 200  |
-      | "GBP"    | 250  |
-      | "CAD"    | 300  |
       | "BGN"    | 150  |
 
   Scenario: Update existing exchange rate
@@ -26,16 +23,13 @@ Feature: Currency Converter
     Then The rate will be successfully updated
 
   Scenario: View exchange rate details
-    When The user loads the home page
-    And Clicks on the the exchange rates link
-    And User selects "USD" from the currencies list
+    When User selects "USD" from the currencies list
     Then They can view the exchange rate details:
       | currency | rate |
       | "USD"    | 200  |
 
   Scenario: List all rates
-    When The user loads the home page
-    And Clicks on the the exchange rates link
+    When Clicks on the the exchange rates link
     Then They will see the list will all rates existing:
       | currency | rate |
       | "USD"    | 200  |
