@@ -2,6 +2,7 @@ package com.estafet.blockchain;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import com.estafet.blockchain.demo.data.lib.bank.Account;
 
 
 public class NewAccountSteps {

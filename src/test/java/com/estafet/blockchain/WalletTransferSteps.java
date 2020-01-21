@@ -6,10 +6,12 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
+import java.util.List;
+import java.util.Map;
+
 public class WalletTransferSteps {
     @Given("^The following wallets exist:$")
     public void setupWallets(DataTable dataTable) {
-
     }
 
     @When("(.+) submits a transfer for (.+) to client (.+)")

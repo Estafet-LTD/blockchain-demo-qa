@@ -10,6 +10,7 @@ public class ViewWalletTransactionsSteps {
     @Given("^The following wallets exist: <wallet name>, balance and <balance status>$")
     public void setupWallets(DataTable dataTable) {
 
+
     }
 
     @When("User selects (.+) from the list")
