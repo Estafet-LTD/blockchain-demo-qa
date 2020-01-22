@@ -35,12 +35,12 @@ public class ViewWalletTransactionsSteps {
 
 }
 
-        @Then("User can see the wallet name (.+)")
+        @Then("User can verify (.+)")
         public void verifyWalletName (String string) {
             Assert.assertTrue(walletName.equals(string));
         }
 
-        @Then("User can see the wallet (.+)")
+        @Then("User can validate (.+)")
         public void verifyWalletBalance (Integer arg1) {
         Assert.assertSame(walletBalance,arg1);
 
