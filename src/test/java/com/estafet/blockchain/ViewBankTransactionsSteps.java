@@ -9,11 +9,10 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import static java.lang.Double.parseDouble;
 import static org.junit.Assert.assertEquals;
 
 public class ViewBankTransactionsSteps {
@@ -34,13 +33,15 @@ public class ViewBankTransactionsSteps {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).get("transaction").toLowerCase().equals("credit"))
             {
-                Account.creditAccount(account,Double.valueOf(list.get(i).get("amount")),true);
+                Account.creditAccount(account,parseDouble(list.get(i).get("amount")),false);
             }else if(list.get(i).get("transaction").toLowerCase().equals("debit"))
             {
-                Account.debitAccount(account,Double.valueOf(list.get(i).get("amount")),true);
+                Account.debitAccount(account,parseDouble(list.get(i).get("amount")),false);
             }else {
                 throw new Exception("Unknown transaction type: "+list.get(i).get("transaction"));
             }
+            Thread.sleep(10000);
+            System.out.println(account.getBalance(account.getId()));
         }
     }
 
@@ -54,7 +55,7 @@ public class ViewBankTransactionsSteps {
         for (int i=0;i<12;i++) {
             try {
                 account.transactionClearedWait(account.getId());
-            } catch (RuntimeException e){}
+            } catch (RuntimeException e){System.out.println("Try: "+i);}
         }
         double balance = account.getBalance(account.getId());
         assertEquals(expectedBalance,balance,0);
