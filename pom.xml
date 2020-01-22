@@ -49,8 +49,7 @@
 			<artifactId>estafet-blockchain-demo-data-lib</artifactId>
 			<version>0.0.2</version>
 		</dependency>
-	</dependencies>
-
+		</dependencies>
 	<distributionManagement>
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
