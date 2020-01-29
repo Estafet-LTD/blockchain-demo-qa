@@ -15,18 +15,42 @@ import java.util.List;
 import java.util.Map;
 
 public class WalletTransferSteps {
+String senderWalletAddress;
+String receiverWalletAddress;
+
 //    @Before
 //    public void before() {
 //        Account.deleteAccounts();
 //    }
-    @Given("^The following wallets exist:$")
-    public void setupWallets(DataTable dataTable) {
-        List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
-        for (int i = 0; i < list.size(); i++) {
-            Wallet.createCreditedWallet(String.valueOf(list.get(i).get("wallet name")),
-                    BigInteger.valueOf(Long.parseLong(list.get(i).get("balance"))));
-        }
-    }
+@Given("^A sender wallet exists with name (.+), balance of (.+), bank currency (.+) and bank balance of (.+)$")
+public void setupSenderWallet(String name, BigInteger walletBalance, String currency, Double bankBalance) throws Throwable {
+    Wallet.createCreditedWallet(name, walletBalance);
+//    Wallet.createWallet(name, currency, bankBalance);
+//    senderWalletAddress = Account.getAccountByName(name).getWalletAddress();
+//    System.out.println(senderWalletAddress);
+//    Wallet.banktoWalletTransfer(senderWalletAddress, walletBalance, false);
+
+}
+
+   @Given("^A receiver wallet exists with name (.+), balance of (.+), bank currency (.+) and bank balance of (.+)$")
+   public void setupReceiverWallet(String name, BigInteger walletBalance, String currency, Double bankBalance) throws Throwable {
+  Wallet.createCreditedWallet(name, walletBalance);
+//    Wallet.createWallet(name, currency, bankBalance);
+//    receiverWalletAddress = Account.getAccountByName(name).getWalletAddress();
+//    System.out.println(receiverWalletAddress);
+//    Wallet.banktoWalletTransfer(receiverWalletAddress, walletBalance, false);
+}
+
+
+//    @Given("^The following wallets exist:$")
+//    public void setupWallets(DataTable dataTable) {
+//        List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
+//            Wallet.createWallet(list.get(i).get("wallet name"), (list.get(i).get("bank currency")), Double.valueOf(list.get(i).get("bank balance")));
+//            String senderWalletAddress = Account.getAccountByName(list.get(0).get("wallet name")).getWalletAddress();
+//            String receiverWalletAddress = Account.getAccountByName(list.get(1).get("wallet name")).getWalletAddress();
+//
+//
+//        }
 
     @When("(.+) submits a transfer for (.+) to client (.+)")
     public void submitTransfer(String string, int arg1, String string2) throws InterruptedException {
@@ -36,6 +60,7 @@ public class WalletTransferSteps {
         System.out.println(receiverWalletAddress);
         Wallet.wallettoWalletTransfer(senderWalletAddress, receiverWalletAddress, BigInteger.valueOf(arg1), false);
         Thread.sleep(10000);
+
     }
 
     @Then("After the wallet (.+) is updated with its balance now equals (.+)")
