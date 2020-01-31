@@ -1,82 +1,74 @@
 package com.estafet.blockchain;
 
 
+import com.estafet.blockchain.demo.data.lib.exchangerate.ExchangeRate;
 import com.estafet.blockchain.demo.data.lib.wallet.Wallet;
 import com.estafet.blockchain.demo.data.lib.bank.Account;
-import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import org.junit.Before;
 
 import java.math.BigInteger;
-import java.util.List;
-import java.util.Map;
 
 public class WalletTransferSteps {
-String senderWalletAddress;
-String receiverWalletAddress;
+    String senderWalletAddress;
+    String receiverWalletAddress;
 
 //    @Before
 //    public void before() {
 //        Account.deleteAccounts();
+//        System.out.println("TEST!");
 //    }
-@Given("^A sender wallet exists with name (.+), balance of (.+), bank currency (.+) and bank balance of (.+)$")
-public void setupSenderWallet(String name, BigInteger walletBalance, String currency, Double bankBalance) throws Throwable {
-    Wallet.createCreditedWallet(name, walletBalance);
-//    Wallet.createWallet(name, currency, bankBalance);
-//    senderWalletAddress = Account.getAccountByName(name).getWalletAddress();
-//    System.out.println(senderWalletAddress);
-//    Wallet.banktoWalletTransfer(senderWalletAddress, walletBalance, false);
+
+//    @After
+//    public void After() {
+//        Account.deleteAccounts();
+//    }
+@Given("^A sender account and wallet exist with name (.+), bank currency (.+) and bank balance of (.+)$")
+public void setupSenderWallet(String name, String currency, Double bankBalance) throws InterruptedException {
+    Account.deleteAccounts();
+    ExchangeRate.setExchangeRate("USD", 10);
+    Account.createAccount(name, currency);
+    Account account = Account.getAccountByName(name);
+    senderWalletAddress = account.getWalletAddress();
+    Account.creditAccount(account, bankBalance, false);
+    System.out.println(senderWalletAddress);
+    Wallet.banktoWalletTransfer(senderWalletAddress, BigInteger.valueOf(100), false);
+    Thread.sleep(30000);
 
 }
 
-   @Given("^A receiver wallet exists with name (.+), balance of (.+), bank currency (.+) and bank balance of (.+)$")
-   public void setupReceiverWallet(String name, BigInteger walletBalance, String currency, Double bankBalance) throws Throwable {
-  Wallet.createCreditedWallet(name, walletBalance);
-//    Wallet.createWallet(name, currency, bankBalance);
-//    receiverWalletAddress = Account.getAccountByName(name).getWalletAddress();
-//    System.out.println(receiverWalletAddress);
-//    Wallet.banktoWalletTransfer(receiverWalletAddress, walletBalance, false);
-}
+    @Given("^A receiver account and wallet exist with name (.+), bank currency (.+) and bank balance of (.+)$")
+    public void setupReceiverWallet(String name, String currency, Double bankBalance) throws InterruptedException {
+    Account.createAccount(name, currency);
+    Account account = Account.getAccountByName(name);
+    receiverWalletAddress = account.getWalletAddress();
+    Account.creditAccount(account, bankBalance, false);
+    System.out.println(receiverWalletAddress);
+    Wallet.banktoWalletTransfer(receiverWalletAddress, BigInteger.valueOf(100), false);
+    Thread.sleep(30000);
+    }
 
-
-//    @Given("^The following wallets exist:$")
-//    public void setupWallets(DataTable dataTable) {
-//        List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
-//            Wallet.createWallet(list.get(i).get("wallet name"), (list.get(i).get("bank currency")), Double.valueOf(list.get(i).get("bank balance")));
-//            String senderWalletAddress = Account.getAccountByName(list.get(0).get("wallet name")).getWalletAddress();
-//            String receiverWalletAddress = Account.getAccountByName(list.get(1).get("wallet name")).getWalletAddress();
-//
-//
-//        }
-
-    @When("(.+) submits a transfer for (.+) to client (.+)")
-    public void submitTransfer(String string, int arg1, String string2) throws InterruptedException {
-        String senderWalletAddress = Account.getAccountByName(string).getWalletAddress();
-        System.out.println(senderWalletAddress);
-        String receiverWalletAddress = Account.getAccountByName(string2).getWalletAddress();
-        System.out.println(receiverWalletAddress);
-        Wallet.wallettoWalletTransfer(senderWalletAddress, receiverWalletAddress, BigInteger.valueOf(arg1), false);
-        Thread.sleep(10000);
+    @When("The sender submits a transfer for (.+) to the receiver")
+    public void submitTransfer(BigInteger arg1) throws InterruptedException {
+        Wallet.wallettoWalletTransfer(senderWalletAddress, receiverWalletAddress, arg1, false);
+        Thread.sleep(30000);
 
     }
 
-    @Then("After the wallet (.+) is updated with its balance now equals (.+)")
-    public void verifySenderBalance(String string, int arg1) {
-        String senderWalletAddress = Account.getAccountByName(string).getWalletAddress();
-        System.out.println(senderWalletAddress);
-        Integer senderWalletBalance=Wallet.getWallet(senderWalletAddress).getBalance();
-               Assert.assertTrue(senderWalletBalance.equals(arg1));
+    @Then("Sender's wallet is updated with its balance now equals (.+)")
+    public void verifySenderBalance(int arg1) {
+        Integer senderWalletBalance = Wallet.getWallet(senderWalletAddress).getBalance();
+        Assert.assertTrue(senderWalletBalance.equals(arg1));
+        System.out.println(senderWalletBalance);
     }
 
-    @Then("(.+) balance is now (.+)")
-    public void verifyReceiverBalance(String string, int arg1) {
-        String receiverWalletAddress = Account.getAccountByName(string).getWalletAddress();
-        System.out.println(receiverWalletAddress);
-        Integer receiverWalletBalance=Wallet.getWallet(receiverWalletAddress).getBalance();
+    @Then("The receiver's balance is now (.+)")
+    public void verifyReceiverBalance(int arg1) {
+        Integer receiverWalletBalance = Wallet.getWallet(receiverWalletAddress).getBalance();
         Assert.assertTrue(receiverWalletBalance.equals(arg1));
+        System.out.println(receiverWalletBalance);
 
     }
 

@@ -1,14 +1,13 @@
 Feature: Execute wallet to wallet transfer
   This is to test the wallet to wallet transfer process
 
-  Scenario: Processing valid transaction from wallet to wallet
-    Given A sender wallet exists with name Michael Ruse, balance of 100, bank currency USD and bank balance of 1000
-#      | wallet name  | balance | bank currency | bank balance |
-#      | Michael Ruse | 100     | USD           | 1000         |
-    And A receiver wallet exists with name Dennis Williams, balance of 100, bank currency USD and bank balance of 2000
-#      | wallet name     | balance | bank currency | bank balance |
-#      | Dennis Williams | 100     | GBP           | 2000         |
+  Scenario Outline: Processing valid transaction from wallet to wallet
+    Given A sender account and wallet exist with name <sender name>, bank currency <sender currency> and bank balance of <sender bank balance>
+    Given A receiver account and wallet exist with name <receiver name>, bank currency <receiver currency> and bank balance of <receiver bank balance>
+    When The sender submits a transfer for 50 to the receiver
+    Then Sender's wallet is updated with its balance now equals 950
+    And The receiver's balance is now 1050
 
-    When Michael Ruse submits a transfer for 50 to client Dennis Williams
-    Then After the wallet Michale Ruse is updated with its balance now equals 50
-    And Dennis Williams balance is now 150
+    Examples:
+      | sender name   | sender currency | sender bank balance | receiver name   | receiver currency | receiver bank balance |
+      | Desi Hristova | USD             | 1000                | Shukri Shukriev | USD               | 2000                  |
