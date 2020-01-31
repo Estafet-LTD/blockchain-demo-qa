@@ -28,8 +28,8 @@ public class ViewWalletTransactionsSteps {
         Account.creditAccount(account, arg1, true);
         walletAddress = account.getWalletAddress();
         System.out.println(walletAddress);
-        Wallet.banktoWalletTransfer(walletAddress, arg2, false);
-       Thread.sleep(30000);
+        Wallet.banktoWalletTransfer(walletAddress, arg2, true);
+      // Thread.sleep(30000);
     }
 
     @When("^User selects wallet (.+) with balance (.+)$")

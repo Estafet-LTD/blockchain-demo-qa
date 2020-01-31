@@ -40,17 +40,12 @@ public class ViewBankTransactionsSteps {
             }else {
                 throw new Exception("Unknown transaction type: "+list.get(i).get("transaction"));
             }
-            Thread.sleep(10000);
+            Thread.sleep(30000);
             System.out.println(account.getBalance(account.getId()));
         }
     }
 
-    @When("The user selects the account (.+)")
-    public void selectAccount(String string) {
-
-    }
-
-    @Then("The account balance is (.+)")
+     @Then("The account balance is (.+)")
     public void verifyAccountBalance(double expectedBalance) {
         for (int i=0;i<12;i++) {
             try {

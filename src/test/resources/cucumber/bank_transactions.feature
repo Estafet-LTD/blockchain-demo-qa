@@ -9,12 +9,9 @@ Feature: Bank transactions and details
       | credit    | 1000   |
       | debit     | 200    |
       | debit     | 300    |
-    #When The user selects the account Dennis Williams
-
   Scenario: Validate account name
-    Then The account balance is 500
-    Then The account status will be CLEARED
+    Then The account balance is 1000
+    #Then The account status will be CLEARED
 
-  #Scenario: Validate account transactions
-  #  Then User can see the list of transactions
+
 
