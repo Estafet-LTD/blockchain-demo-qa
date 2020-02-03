@@ -8,7 +8,6 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.api.java.eo.Do;
 import org.junit.Assert;
 
 import java.math.BigInteger;
@@ -17,50 +16,50 @@ import java.util.Map;
 
 
 public class BankTransferSteps {
-    @Given("The following wallet exist:")
-    public void createWallet(DataTable dataTable) {
-        List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
-        Wallet wallet = Wallet.createCreditedWallet(list.get(0).get("wallet name"), BigInteger.valueOf(Long.parseLong(list.get(0).get("balance"))));
-        wallet.setWalletName(list.get(0).get("wallet name"));
-        Assert.assertEquals(wallet.getStatus(),list.get(0).get("balance status"));
-    }
-
-    @Given("The following bank account exists:")
-    public void createAccounts(DataTable dataTable) {
-        List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
-        Account.createCreditedAccount(list.get(0).get("account name"),list.get(0).get("currency"),Double.parseDouble(list.get(0).get("account balance")));
-    }
+    String walletAddress;
+    Account account;
+    int accountId;
 
     @Given("The rate for (.+) is (.+)")
     public void setExchangeRate(String currency, Integer rate) {
-        ExchangeRate.setExchangeRate(currency,rate);
+        Account.deleteAccounts();
+        ExchangeRate.setExchangeRate(currency, rate);
     }
 
-    @When("(.+) submits a transfer for (.+) to wallet (.+)")
-    public void submitBankTransfer(String from, Integer sum, String to)  throws Exception{
-        Wallet.wallettoWalletTransfer(Account.getAccountByName(from).getWalletAddress(),Account.getAccountByName(to).getWalletAddress(),BigInteger.valueOf(sum),false);
-        Thread.sleep(1000);
+    @Given("The following account exists:")
+    public void createWallet(DataTable dataTable) throws InterruptedException {
+        List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
+        Account account = Account.createAccount(list.get(0).get("account name"), list.get(0).get("currency"));
+        accountId = account.getId();
+        Account.creditAccount(account, Double.parseDouble(list.get(0).get("account balance")), false);
+        Thread.sleep(30000);
+        walletAddress = account.getWalletAddress();
     }
 
-    @Then("The transaction is in (.+) state")
-    public void transactionState(String string) {
-
+    @When("A transfer is submitted to wallet for (.+)$")
+    public void submitBankTransfer(BigInteger arg1) throws InterruptedException {
+        Wallet.banktoWalletTransfer(walletAddress, arg1, true);
+        Thread.sleep(60000);
     }
 
-    @Then("After a while the wallet (.+) is updated with its balance now (.+)")
-    public void balanceUpdate(String name, Integer balance) {
-        Assert.assertEquals(Wallet.getWallet(Account.getAccountByName(name).getWalletAddress()).getBalance(),(double)balance);
+    @Then("^The account balance gets updated to (.+)$")
+    public void newAccountBalance(Double balance) {
+        Double accountBalance = Account.getAccount(accountId).getBalance(accountId);
+        Assert.assertEquals(balance, accountBalance);
     }
 
-    @Then("The transaction in the (.+) account gets (.+)")
-    public void clearTransaction(String string, String string2) {
-
+    @Then("^The transaction in the account gets (.+)$")
+    public void validateTransaction(String transactionStatus) {
+        String status = Account.getLastTransaction(accountId).getStatus();
+        Assert.assertEquals(transactionStatus, status);
     }
 
-    @Then("The account balance of (.+) is now (.+)")
-    public void newAccountBalance(String name, Integer balance) {
-        Assert.assertEquals(Wallet.getWallet(Account.getAccountByName(name).getWalletAddress()).getBalance(),(double)balance);
+    @Then("The wallet is updated with its balance now (.+)$")
+    public void transactionState(int balance) {
+        int walletBalance = Wallet.getWallet(walletAddress).getBalance();
+        Assert.assertEquals(balance, walletBalance);
     }
-
 }
+
+
 

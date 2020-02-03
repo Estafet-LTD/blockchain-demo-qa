@@ -2,16 +2,12 @@ Feature: Execute bank to wallet transfer
   This is to test the bank to wallet transfer process
 
   Scenario: Processing valid transaction from bank to wallet
-    Given The following wallet exist:
-      | balance | balance status | wallet name    |
-      | 100     | "CLEARED"      | "Michael Ruse" |
-    And The following bank account exists:
-      | account name       | account balance | currency |
-      | "Iryna Mihlyuzova" | 1000            | "GBP"    |
-    And The rate for "GBP" is 250
-    When "Iryna Mihlyuzova" submits a transfer for 500 to wallet "Michael Ruse"
-    Then The transaction is in "PENDING" state
-    And After a while the wallet "Michael Ruse" is updated with its balance now 102
-    And The transaction in the "Irina Mihlyuzova" account gets "CLEARED"
-    And The account balance of "Irina Mihlyuzova" is now 500
+    Given The rate for USD is 10
+    And The following account exists:
+      | account name     | account balance | currency |
+      | Iryna Mihlyuzova | 1000            | USD      |
+    When A transfer is submitted to wallet for 100
+    Then The account balance gets updated to 900
+    And The transaction in the account gets CLEARED
+    And The wallet is updated with its balance now 1000
 
