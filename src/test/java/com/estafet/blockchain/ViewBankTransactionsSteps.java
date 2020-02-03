@@ -1,14 +1,15 @@
 package com.estafet.blockchain;
 
 import com.estafet.blockchain.demo.data.lib.bank.Account;
-import com.estafet.blockchain.demo.data.lib.bank.Transaction;
+import com.estafet.blockchain.demo.data.lib.exchangerate.ExchangeRate;
+import com.estafet.blockchain.demo.data.lib.wallet.Wallet;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -18,12 +19,16 @@ import static org.junit.Assert.assertEquals;
 public class ViewBankTransactionsSteps {
 
     Account account;
+    int accountId;
+
     @Given("This bank account exist:")
     public void setupAccount(DataTable dataTable) {
         Account.deleteAccounts();
+        ExchangeRate.setExchangeRate("USD", 10);
         List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
         for (int i = 0; i < list.size(); i++) {
             account = Account.createAccount(list.get(i).get("account name"),list.get(i).get("currency"));
+            accountId = account.getId();
         }
     }
 
@@ -31,16 +36,16 @@ public class ViewBankTransactionsSteps {
     public void setupTransactions(DataTable dataTable) throws Exception{
         List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
         for (int i = 0; i < list.size(); i++) {
+
             if (list.get(i).get("transaction").toLowerCase().equals("credit"))
-            {
-                Account.creditAccount(account,parseDouble(list.get(i).get("amount")),false);
+            { Account.creditAccount(account,parseDouble(list.get(i).get("amount")),false);
             }else if(list.get(i).get("transaction").toLowerCase().equals("debit"))
-            {
-                Account.debitAccount(account,parseDouble(list.get(i).get("amount")),false);
+            { String walletAddress = account.getWalletAddress();
+                Wallet.banktoWalletTransfer(walletAddress, BigInteger.valueOf(Long.parseLong(list.get(i).get("amount"))), false);
             }else {
                 throw new Exception("Unknown transaction type: "+list.get(i).get("transaction"));
             }
-            Thread.sleep(30000);
+            Thread.sleep(60000);
             System.out.println(account.getBalance(account.getId()));
         }
     }
@@ -61,16 +66,12 @@ public class ViewBankTransactionsSteps {
         Assert.assertTrue(Account.getLastTransaction(account.getId()).getStatus().equals("CLEARED"));
     }
 
-    @Then("User can see the list of transactions")
-    public void verifyTransactionsList() {
-
-    }
-    @Test
-    public void testDebitAccount() {
-        Account account =  Account.createCreditedAccount("Shukri Shukriev", "USD",60000);
-        Account.debitAccount(account,250,false);
-        Transaction transaction = Account.getLastTransaction(account.getId());
-        assertEquals(-250.0, transaction.getAmount(),0.1);
-        assertEquals("PENDING", transaction.getStatus());
-    }
+//    @Test
+//    public void testDebitAccount() {
+//        Account account =  Account.createCreditedAccount("Shukri Shukriev", "USD",60000);
+//        Account.debitAccount(account,250,false);
+//        Transaction transaction = Account.getLastTransaction(account.getId());
+//        assertEquals(-250.0, transaction.getAmount(),0.1);
+//        assertEquals("PENDING", transaction.getStatus());
+//    }
 }

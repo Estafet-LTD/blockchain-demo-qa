@@ -10,8 +10,8 @@ Feature: Bank transactions and details
       | debit     | 200    |
       | debit     | 300    |
   Scenario: Validate account name
-    Then The account balance is 1000
-    #Then The account status will be CLEARED
+    Then The account balance is 500
+    Then The account status will be CLEARED
 
 
 
