@@ -31,15 +31,15 @@ public class BankTransferSteps {
         List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
         Account account = Account.createAccount(list.get(0).get("account name"), list.get(0).get("currency"));
         accountId = account.getId();
-        Account.creditAccount(account, Double.parseDouble(list.get(0).get("account balance")), false);
-        Thread.sleep(30000);
+        Account.creditAccount(account, Double.parseDouble(list.get(0).get("account balance")), true);
+        //Thread.sleep(30000);
         walletAddress = account.getWalletAddress();
     }
 
     @When("A transfer is submitted to wallet for (.+)$")
     public void submitBankTransfer(BigInteger arg1) throws InterruptedException {
         Wallet.banktoWalletTransfer(walletAddress, arg1, true);
-        Thread.sleep(60000);
+       // Thread.sleep(60000);
     }
 
     @Then("^The account balance gets updated to (.+)$")

@@ -34,8 +34,8 @@ public void setupSenderWallet(String name, String currency, Double bankBalance) 
     senderWalletAddress = account.getWalletAddress();
     Account.creditAccount(account, bankBalance, true);
     System.out.println(senderWalletAddress);
-    Wallet.banktoWalletTransfer(senderWalletAddress, BigInteger.valueOf(100), false);
-   Thread.sleep(30000);
+    Wallet.banktoWalletTransfer(senderWalletAddress, BigInteger.valueOf(100), true);
+   //Thread.sleep(30000);
 
 }
 
@@ -46,14 +46,14 @@ public void setupSenderWallet(String name, String currency, Double bankBalance) 
     receiverWalletAddress = account.getWalletAddress();
     Account.creditAccount(account, bankBalance, true);
     System.out.println(receiverWalletAddress);
-    Wallet.banktoWalletTransfer(receiverWalletAddress, BigInteger.valueOf(100), false);
-    Thread.sleep(30000);
+    Wallet.banktoWalletTransfer(receiverWalletAddress, BigInteger.valueOf(100), true);
+    //Thread.sleep(30000);
     }
 
     @When("The sender submits a transfer for (.+) to the receiver")
-    public void submitTransfer(BigInteger arg1) throws InterruptedException {
-      Wallet.wallettoWalletTransfer(senderWalletAddress, receiverWalletAddress, arg1, false);
-      Thread.sleep(30000);
+    public void submitTransfer(BigInteger arg1) {
+      Wallet.wallettoWalletTransfer(senderWalletAddress, receiverWalletAddress, arg1, true);
+      //Thread.sleep(30000);
 
     }
 

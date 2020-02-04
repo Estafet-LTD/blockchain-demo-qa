@@ -29,7 +29,7 @@ public class ViewWalletTransactionsSteps {
         walletAddress = account.getWalletAddress();
         System.out.println(walletAddress);
         Wallet.banktoWalletTransfer(walletAddress, arg2, true);
-      // Thread.sleep(30000);
+       //Thread.sleep(60000);
     }
 
     @When("^User selects wallet (.+) with balance (.+)$")

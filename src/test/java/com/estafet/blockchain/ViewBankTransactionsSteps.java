@@ -38,14 +38,14 @@ public class ViewBankTransactionsSteps {
         for (int i = 0; i < list.size(); i++) {
 
             if (list.get(i).get("transaction").toLowerCase().equals("credit"))
-            { Account.creditAccount(account,parseDouble(list.get(i).get("amount")),false);
+            { Account.creditAccount(account,parseDouble(list.get(i).get("amount")),true);
             }else if(list.get(i).get("transaction").toLowerCase().equals("debit"))
             { String walletAddress = account.getWalletAddress();
-                Wallet.banktoWalletTransfer(walletAddress, BigInteger.valueOf(Long.parseLong(list.get(i).get("amount"))), false);
+                Wallet.banktoWalletTransfer(walletAddress, BigInteger.valueOf(Long.parseLong(list.get(i).get("amount"))), true);
             }else {
                 throw new Exception("Unknown transaction type: "+list.get(i).get("transaction"));
             }
-            Thread.sleep(60000);
+            //Thread.sleep(60000);
             System.out.println(account.getBalance(account.getId()));
         }
     }
