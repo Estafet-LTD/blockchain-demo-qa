@@ -40,19 +40,13 @@
 		</dependency>
 		<dependency>
 			<groupId>com.estafet.blockchain.demo</groupId>
-			<artifactId>estafet-blockchain-demo-pages-lib</artifactId>
-			<version>0.0.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.estafet.blockchain.demo</groupId>
 			<artifactId>estafet-blockchain-demo-data-lib</artifactId>
-			<version>0.0.8</version>
+			<version>0.0.9</version>
 		</dependency>
 		<dependency>
 			<groupId>com.estafet.blockchain.demo</groupId>
 			<artifactId>estafet-blockchain-demo-commons-lib</artifactId>
-			<version>0.0.12</version>
+			<version>0.0.13</version>
 		</dependency>
 		</dependencies>
 	<distributionManagement>
