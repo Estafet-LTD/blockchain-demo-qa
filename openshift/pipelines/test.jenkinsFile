@@ -2,11 +2,11 @@ node('maven') {
 
 	properties([
 	  parameters([
-	     string(name: 'GITHUB'), string(name: 'PRODUCT'), string(name: 'REPO'),
+	     string(name: 'GITHUB'), string(name: 'PRODUCT'), string(name: 'REPO'), string(name: 'PROJECT'),
 	  ])
 	])
 
-	def project = "${params.PRODUCT}-test"
+	def project = params.PROJECT
 
 	stage("checkout") {
 		git branch: "master", url: "https://github.com/${params.GITHUB}/${params.REPO}-qa"
