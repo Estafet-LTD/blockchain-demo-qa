@@ -39,9 +39,11 @@ public class ViewBankTransactionsSteps {
 
             if (list.get(i).get("transaction").toLowerCase().equals("credit"))
             { Account.creditAccount(account,parseDouble(list.get(i).get("amount")),true);
+            account.transactionClearedWait(account.getId());
             }else if(list.get(i).get("transaction").toLowerCase().equals("debit"))
             { String walletAddress = account.getWalletAddress();
                 Wallet.banktoWalletTransfer(walletAddress, BigInteger.valueOf(Long.parseLong(list.get(i).get("amount"))), true);
+                account.transactionClearedWait(account.getId());
             }else {
                 throw new Exception("Unknown transaction type: "+list.get(i).get("transaction"));
             }
