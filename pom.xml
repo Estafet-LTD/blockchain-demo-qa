@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>com.estafet.blockchain.demo</groupId>
 			<artifactId>estafet-blockchain-demo-commons-lib</artifactId>
-			<version>0.0.13</version>
+			<version>0.0.14</version>
 		</dependency>
 		</dependencies>
 	<distributionManagement>
