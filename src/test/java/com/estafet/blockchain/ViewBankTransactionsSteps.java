@@ -28,7 +28,7 @@ public class ViewBankTransactionsSteps {
         List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
         for (int i = 0; i < list.size(); i++) {
             account = Account.createAccount(list.get(i).get("account name"),list.get(i).get("currency"));
-            accountId = account.getId();
+            account.accountCreatedWait(account.getId());
         }
     }
 
@@ -54,12 +54,6 @@ public class ViewBankTransactionsSteps {
                 try {
                 account.transactionClearedWait(account.getId());
                 }
-        		catch (InterruptedException e) {
-        			long endTime = System.nanoTime();
-                    long duration = (endTime - startTime);
-                    System.out.println("Didn't clear in: " + duration);
-                    throw new RuntimeException(e);
-        		}
                 long endTime = System.nanoTime();
                 long duration = (endTime - startTime);
                 System.out.println("Time to clear: " + duration);
