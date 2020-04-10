@@ -51,7 +51,15 @@ public class ViewBankTransactionsSteps {
             { String walletAddress = account.getWalletAddress();
             	long startTime = System.nanoTime();
                 Wallet.banktoWalletTransfer(walletAddress, BigInteger.valueOf(Long.parseLong(list.get(i).get("amount"))), true);
+                try {
                 account.transactionClearedWait(account.getId());
+                }
+        		catch (InterruptedException e) {
+        			long endTime = System.nanoTime();
+                    long duration = (endTime - startTime);
+                    System.out.println("Didn't clear in: " + duration);
+                    throw new RuntimeException(e);
+        		}
                 long endTime = System.nanoTime();
                 long duration = (endTime - startTime);
                 System.out.println("Time to clear: " + duration);
