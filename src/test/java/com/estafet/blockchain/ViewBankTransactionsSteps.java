@@ -49,8 +49,12 @@ public class ViewBankTransactionsSteps {
             account.transactionClearedWait(account.getId());
             }else if(list.get(i).get("transaction").toLowerCase().equals("debit"))
             { String walletAddress = account.getWalletAddress();
+            	long startTime = System.nanoTime();
                 Wallet.banktoWalletTransfer(walletAddress, BigInteger.valueOf(Long.parseLong(list.get(i).get("amount"))), true);
                 account.transactionClearedWait(account.getId());
+                long endTime = System.nanoTime();
+                long duration = (endTime - startTime);
+                System.out.println("Time to clear: " + duration);
             }else {
                 throw new Exception("Unknown transaction type: "+list.get(i).get("transaction"));
             }
