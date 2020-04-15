@@ -7,7 +7,6 @@ import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.junit.Assert;
-import org.junit.Test;
 
 import java.math.BigInteger;
 import java.util.List;

@@ -8,9 +8,11 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import cucumber.api.DataTable;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 import java.util.Map;
-//import io.cucumber.datatable.DataTable;
 
 public class ExchangeRateSteps  {
 
@@ -34,7 +36,7 @@ public class ExchangeRateSteps  {
         List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
         ExchangeRate.setExchangeRate(list.get(0).get("currency"), Double.valueOf(list.get(0).get("rate")));
         List<ExchangeRate> ExchangeRates = ExchangeRate.getExchangeRates();
-
+        assertTrue(!ExchangeRates.isEmpty());
     }
 
     @Then("The currency <currency> exists with rate <rate>")
@@ -59,7 +61,8 @@ public class ExchangeRateSteps  {
 
     @When("User selects \"([^\"]*)\" from the currencies list")
     public void selectRate(String string) {
-    ExchangeRate exchangeRate = ExchangeRate.getExchangeRate(string);
+    	ExchangeRate exchangeRate = ExchangeRate.getExchangeRate(string);
+    	assertEquals(string, exchangeRate.getCurrency());
     }
 
     @Then("They can view the exchange rate details:")
@@ -72,6 +75,7 @@ public class ExchangeRateSteps  {
     @When("^Clicks on the the exchange rates link$")
     public void loadExchangeRatesList() throws Throwable {
         List<ExchangeRate> exchangeRateList = ExchangeRate.getExchangeRates();
+        assertTrue(!exchangeRateList.isEmpty());
     }
     @Then("They will see the list will all rates existing:")
     public void verifyRatesList(DataTable dataTable) {
@@ -79,6 +83,5 @@ public class ExchangeRateSteps  {
         for (int i = 0; i < list.size(); i++) {
         Assert.assertTrue(list.get(0).get("currency"), true);
         }
-
     }
 }
