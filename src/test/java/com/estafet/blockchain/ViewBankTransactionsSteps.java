@@ -27,20 +27,33 @@ public class ViewBankTransactionsSteps {
         List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
         for (int i = 0; i < list.size(); i++) {
             account = Account.createAccount(list.get(i).get("account name"),list.get(i).get("currency"));
-            accountId = account.getId();
+            account.accountCreatedWait(account.getId());
         }
     }
 
     @Given("The account has the following transactions:")
     public void setupTransactions(DataTable dataTable) throws Exception{
         List<Map<String, String>> list = dataTable.asMaps(String.class, String.class);
+        if (Account.getAccountByName(account.getAccountName()) != null) {
+        	System.out.println("Mike: Account Name exists");
+        }else {
+        	System.out.println("Mike: account doesn't exist");
+        	
+        		
+        }
         for (int i = 0; i < list.size(); i++) {
 
             if (list.get(i).get("transaction").toLowerCase().equals("credit"))
             { Account.creditAccount(account,parseDouble(list.get(i).get("amount")),true);
+            account.transactionClearedWait(account.getId());
             }else if(list.get(i).get("transaction").toLowerCase().equals("debit"))
             { String walletAddress = account.getWalletAddress();
+            	long startTime = System.nanoTime();
                 Wallet.banktoWalletTransfer(walletAddress, BigInteger.valueOf(Long.parseLong(list.get(i).get("amount"))), true);
+                account.transactionClearedWait(account.getId());
+                long endTime = System.nanoTime();
+                long duration = (endTime - startTime);
+                System.out.println("Time to clear: " + duration);
             }else {
                 throw new Exception("Unknown transaction type: "+list.get(i).get("transaction"));
             }
