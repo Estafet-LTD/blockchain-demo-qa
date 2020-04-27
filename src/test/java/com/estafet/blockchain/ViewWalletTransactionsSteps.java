@@ -45,7 +45,8 @@ public class ViewWalletTransactionsSteps {
         }
 
         @Then("User can validate (.+)")
-        public void verifyWalletBalance (Integer arg1) {
+        public void verifyWalletBalance (Integer arg1) throws InterruptedException {
+        Thread.sleep(50000);
         Assert.assertTrue(arg1.equals(walletBalance));
 
         }
