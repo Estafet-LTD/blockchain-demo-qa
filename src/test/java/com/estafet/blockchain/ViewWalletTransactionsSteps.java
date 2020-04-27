@@ -33,10 +33,13 @@ public class ViewWalletTransactionsSteps {
     }
 
     @When("^User selects wallet (.+) with balance (.+)$")
-    public void selectWallet(String name, BigInteger arg1) {
+    public void selectWallet(String name, BigInteger arg1) throws InterruptedException {
+        Thread.sleep(50000);
         walletName = Wallet.getWallet(walletAddress).getWalletName();
         walletBalance = Wallet.getWallet(walletAddress).getBalance();
         walletStatus = Wallet.getWallet(walletAddress).getStatus();
+        System.out.println("Mike. Wallet balance is: " + walletBalance + " but should be: " + arg1);
+
 }
 
         @Then("User can verify (.+)")
@@ -45,9 +48,7 @@ public class ViewWalletTransactionsSteps {
         }
 
         @Then("User can validate (.+)")
-        public void verifyWalletBalance (Integer arg1) throws InterruptedException {
-        Thread.sleep(50000);
-        System.out.println("Mike. Wallet balance is: " + walletBalance + " but should be: " + arg1);
+        public void verifyWalletBalance (Integer arg1) {
         Assert.assertTrue(arg1.equals(walletBalance));
 
         }
