@@ -65,7 +65,8 @@ public void setupSenderWallet(String name, String currency, Double bankBalance) 
     }
 
     @Then("The receiver's balance is now (.+)")
-    public void verifyReceiverBalance(int arg1) {
+    public void verifyReceiverBalance(int arg1) throws InterruptedException {
+    	Thread.sleep(50000);
         Integer receiverWalletBalance = Wallet.getWallet(receiverWalletAddress).getBalance();
         Assert.assertTrue(receiverWalletBalance.equals(arg1));
         System.out.println(receiverWalletBalance);
