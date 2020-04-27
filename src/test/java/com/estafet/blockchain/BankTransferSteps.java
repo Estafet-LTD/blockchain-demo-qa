@@ -44,6 +44,7 @@ public class BankTransferSteps {
 
     @Then("^The account balance gets updated to (.+)$")
     public void newAccountBalance(Double balance) {
+    	Thread.sleep(5000);
         Double accountBalance = Account.getAccount(accountId).getBalance(accountId);
         Assert.assertEquals(balance, accountBalance);
     }
