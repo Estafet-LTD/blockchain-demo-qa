@@ -44,7 +44,8 @@ public class BankTransferSteps {
 
     @Then("^The account balance gets updated to (.+)$")
     public void newAccountBalance(Double balance) throws InterruptedException {
-    	Thread.sleep(5000);
+    	System.out.println("Mike: Waiting 50 seconds");
+    	Thread.sleep(50000);
         Double accountBalance = Account.getAccount(accountId).getBalance(accountId);
         Assert.assertEquals(balance, accountBalance);
     }
