@@ -7,7 +7,7 @@ import com.estafet.blockchain.demo.data.lib.bank.Account;
 import org.junit.Assert;
 
 public class NewAccountSteps {
-    int newAccountId;
+    String newAccountId;
     String walletAddress;
 
     @When("I submit name (.+), amount (.+) and currency in use (.+)")

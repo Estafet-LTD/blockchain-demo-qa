@@ -18,7 +18,7 @@ import java.util.Map;
 public class BankTransferSteps {
     String walletAddress;
     Account account;
-    int accountId;
+    String  accountId;
 
     @Given("The rate for (.+) is (.+)")
     public void setExchangeRate(String currency, Integer rate) {

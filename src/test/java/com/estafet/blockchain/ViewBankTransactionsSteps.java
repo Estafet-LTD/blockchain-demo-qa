@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 public class ViewBankTransactionsSteps {
 
     Account account;
-    int accountId;
+    String accountId;
 
     @Given("This bank account exist:")
     public void setupAccount(DataTable dataTable) {
