@@ -8,18 +8,14 @@ node('maven') {
 
 	def project = params.PROJECT
 
-	stage("checkout") {
-		git branch: "master", url: "https://github.com/${params.GITHUB}/${params.REPO}"
-	}
-
-	stage("reset test flags for ${project}") {
-		sh "oc label namespace ${project} test-passed=false --overwrite=true"	
-	}
-
 	stage("reset the blockchain") {
 		sh "oc rollout latest dc/go-ethereum -n ${project}"
 		sh "oc rollout status dc/go-ethereum -n ${project}"
 		sleep time:"30", unit: "SECONDS"  	
+	}
+
+	stage("checkout") {
+		git branch: "master", url: "https://github.com/${params.GITHUB}/${params.REPO}"
 	}
 
 	stage("cucumber tests") {
@@ -30,13 +26,6 @@ node('maven') {
 				cucumber buildStatus: 'UNSTABLE', fileIncludePattern: '**/*cucumber-report.json',  trendsLimit: 10
 			}
 		} 
-	}
-	
-	stage("flag this environment") {
-		if (currentBuild.currentResult == 'SUCCESS') {
-			println "The tests passed successfully"
-			sh "oc label namespace ${project} test-passed=true --overwrite=true"	
-		}
 	}
 	
 }
